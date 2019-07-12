@@ -1,0 +1,32 @@
+{
+    "name": "tabula/module-admin",
+    "description": "Tabula Admin Panel",
+    "type": "tabula-module",
+    "license": "Proprietary", 
+    "authors": [
+        {
+            "name": "Skye",
+            "email": "skye@domos.me.uk"
+        }
+    ],
+    "repositories": [
+        {
+            "url": "https://gitlab.com/polymathicltd/tabula.git",
+            "type": "git"
+        },
+        {
+            "url": "https://gitlab.com/polymathicltd/tabulamoduleinstaller.git",
+            "type": "git"
+        }
+    ],
+    "require": {
+        "polymathic/tabula": "dev-master",
+        "polymathic/tabula-moduleinstaller": "dev-master",
+        "semantic/ui": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tabula\\Modules\\Admin\\": "src/"
+        }
+    }
+}
