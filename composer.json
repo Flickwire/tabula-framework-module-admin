@@ -11,11 +11,11 @@
     ],
     "repositories": [
         {
-            "url": "https://gitlab.com/polymathicltd/tabula.git",
+            "url": "https://gitlab.com/polymathicltd/tabula/tabula.git",
             "type": "git"
         },
         {
-            "url": "https://gitlab.com/polymathicltd/tabulamoduleinstaller.git",
+            "url": "https://gitlab.com/polymathicltd/tabula/tabulamoduleinstaller.git",
             "type": "git"
         }
     ],
