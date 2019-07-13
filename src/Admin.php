@@ -16,7 +16,7 @@ class Admin implements Module {
     }
 
     public function registerRoutes(Router $router): void{
-        $router->register(new Route("admin",$this,"render"));
+        $router->register(new Route("/admin",$this,"render"));
     }
 
     public function preInit(Tabula $tabula): void{
@@ -37,12 +37,12 @@ class Admin implements Module {
 
     public function render() {
         $currentPane = $this->tabula->registry->getRequest()->get("pane");
-        $outMarkup = file_get_contents("admin.html");
+        $outMarkup = file_get_contents(__DIR__.DS."admin.html");
         $adminUrl = $this->tabula->registry->getUriBase() . "admin";
         foreach ($this->panes as $pane) {
             $class = ($currentPane === $pane->getSlug()) ? ' active' : '';
             $paneUrl = ($currentPane === $pane->getSlug()) ? '#' : ($adminUrl . "?pane=" . $pane->getSlug());
-            str_replace("_{PANE_NAME}_",
+            $outMarkup = str_replace("_{PANE_NAME}_",
             `
             <a class="item{$class}" href="{$paneUrl}">
                 {$pane->getName()}
@@ -51,13 +51,13 @@ class Admin implements Module {
             `,
             $outMarkup);
             if ($currentPane === $pane->getSlug()){
-                str_replace("_{CURRENT_PANE}_",$pane->render($this->tabula),$outMarkup);
-                str_replace("_{CURRENT_NAME}_",$pane->getName(),$outMarkup);
+                $outMarkup = str_replace("_{CURRENT_PANE}_",$pane->render($this->tabula),$outMarkup);
+                $outMarkup = str_replace("_{CURRENT_NAME}_",$pane->getName(),$outMarkup);
             }
         }
-        str_replace("_{PANE_NAME}_",'No Admin Panes Loaded',$outMarkup);
-        str_replace("_{CURRENT_PANE}_",'No Pane Selected',$outMarkup);
-        str_replace("_{CURRENT_NAME}_",'Admin',$outMarkup);
+        $outMarkup = str_replace("_{PANE_NAME}_",'No Admin Panes Loaded',$outMarkup);
+        $outMarkup = str_replace("_{CURRENT_PANE}_",'No Pane Selected',$outMarkup);
+        $outMarkup = str_replace("_{CURRENT_NAME}_",'Admin',$outMarkup);
         echo($outMarkup);
     }
 }
