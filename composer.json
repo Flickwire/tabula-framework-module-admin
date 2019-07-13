@@ -9,16 +9,10 @@
             "email": "skye@domos.me.uk"
         }
     ],
-    "repositories": [
-        {
-            "url": "https://gitlab.com/polymathicltd/tabula/tabula.git",
-            "type": "git"
-        },
-        {
-            "url": "https://gitlab.com/polymathicltd/tabula/tabulamoduleinstaller.git",
-            "type": "git"
-        }
-    ],
+    "repositories": [{
+        "type": "composer",
+        "url": "https://packages.lovelace.digital"
+    }],
     "require": {
         "polymathic/tabula": "dev-master",
         "polymathic/tabula-moduleinstaller": "dev-master",
