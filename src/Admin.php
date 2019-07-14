@@ -42,22 +42,39 @@ class Admin implements Module {
         foreach ($this->panes as $pane) {
             $class = ($currentPane === $pane->getSlug()) ? ' active' : '';
             $paneUrl = ($currentPane === $pane->getSlug()) ? '#' : ($adminUrl . "?pane=" . $pane->getSlug());
-            $outMarkup = str_replace("_{PANE_NAME}_",
-            `
-            <a class="item{$class}" href="{$paneUrl}">
-                {$pane->getName()}
-            </a>
-            _{PANE_NAME}_
-            `,
-            $outMarkup);
+            if ($paneUrl === '#'){
+                $outMarkup = str_replace("_{PANE_NAME}_",
+                "
+                <div class=\"item{$class}\">
+                    {$pane->getName()}
+                </div>
+                _{PANE_NAME}_
+                ",
+                $outMarkup);
+            } else {
+                $outMarkup = str_replace("_{PANE_NAME}_",
+                "
+                <a class=\"item{$class}\" href=\"{$paneUrl}\">
+                    {$pane->getName()}
+                </a>
+                _{PANE_NAME}_
+                ",
+                $outMarkup);
+            }
             if ($currentPane === $pane->getSlug()){
                 $outMarkup = str_replace("_{CURRENT_PANE}_",$pane->render($this->tabula),$outMarkup);
                 $outMarkup = str_replace("_{CURRENT_NAME}_",$pane->getName(),$outMarkup);
             }
         }
-        $outMarkup = str_replace("_{PANE_NAME}_",'No Admin Panes Loaded',$outMarkup);
+        $outMarkup = str_replace("_{PANE_NAME}_","
+        <div class=\"link item active\" href=\"#\">
+        <i class=\"info circle icon\"></i>
+        No Admin Panes Loaded
+        </div>
+        ",$outMarkup);
         $outMarkup = str_replace("_{CURRENT_PANE}_",'No Pane Selected',$outMarkup);
         $outMarkup = str_replace("_{CURRENT_NAME}_",'Admin',$outMarkup);
+        $outMarkup = str_replace("_{SEMANTIC_PATH}_",$this->tabula->registry->getUriBase().'/vendor/semantic/ui/dist/',$outMarkup);
         echo($outMarkup);
     }
 }

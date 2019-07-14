@@ -1,10 +1,27 @@
-<html>
+<html style="height: 100%; width: 100%; margin:0; padding:0;">
     <head>
         <meta name="viewport" value="initial-scale=1" />
         <title>Tabula - _{CURRENT_NAME}_</title>
+        <link href="_{SEMANTIC_PATH}_semantic.min.css" rel="stylesheet" />
     </head>
-    <body>
-        _{PANE_NAME}_
-        _{CURRENT_PANE}_
+    <body style="height: 100%; width: 100%; margin:0; padding:0;">
+            <div class="ui divided grid">
+                <div class="ui four wide column" style="height: 100vh; overflow-y: hidden; max-width: 300px;">
+                    <div class="ui divider hidden"></div>
+                    <h2 class="ui heading" style="text-align: center; width: 100%;">Tabula</h2>
+                    <div class="ui divider"></div>
+                    <div class="ui fluid secondary vertical menu" style="height: 100%; overflow-y:auto;">
+                        _{PANE_NAME}_
+                    </div>
+                </div>
+                <div class="ui eleven wide column">
+                    <div class="ui divider hidden"></div>
+                    <h1 class="ui heading">_{CURRENT_NAME}_</h1>
+                    <div class="ui divider"></div>
+                    _{CURRENT_PANE}_
+                </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" async></script>
+        <script src="_{SEMANTIC_PATH}_semantic.min.js" async defer></script>
     </body>
 </html>
