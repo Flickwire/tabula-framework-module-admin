@@ -22,4 +22,9 @@ abstract class AdminPane {
      * Return a url-friendly slug for your pane
      */
     public abstract function getSlug(): string;
+
+    /**
+     * Return an icon for the menu if you want to
+     */
+    public abstract function getIcon(): ?string;
 }

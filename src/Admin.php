@@ -50,12 +50,15 @@ class Admin implements Module {
         $outMarkup = file_get_contents(__DIR__.DS."admin.html");
         foreach ($this->groups as $groupName => $group) {
             $class = "";
+            $icon = "";
             if (!$this->groupActive($group)){
                 $class = " dropdown";
+                $icon = "<i class=\"dropdown icon\"></i>";
             }
             $outMarkup = str_replace("_{PANE_NAME}_","
             <div class=\"item{$class}\">
             {$groupName}
+            {$icon}
             <div class=\"menu\">
             ",$outMarkup);
             $outMarkup = str_replace("_{PANE_NAME}_",$this->renderMenu($group),$outMarkup);
@@ -84,10 +87,17 @@ class Admin implements Module {
         foreach ($items as $pane) {
             $class = ($currentPane === $pane->getSlug()) ? ' active' : '';
             $paneUrl = ($currentPane === $pane->getSlug()) ? '#' : ($adminUrl . "?pane=" . $pane->getSlug());
+            $icon = $pane->getIcon();
+            if ($icon === null){
+                $icon = "";
+            } else {
+                $icon = "<i class=\"icon {$icon}\"></i>";
+            }
             if ($paneUrl === '#'){
                 $outMarkup = str_replace("_{PANE_NAME}_",
                 "
                 <div class=\"item{$class}\">
+                    {$icon}
                     {$pane->getName()}
                 </div>
                 _{PANE_NAME}_
@@ -97,6 +107,7 @@ class Admin implements Module {
                 $outMarkup = str_replace("_{PANE_NAME}_",
                 "
                 <a class=\"item{$class}\" href=\"{$paneUrl}\">
+                    {$icon}
                     {$pane->getName()}
                 </a>
                 _{PANE_NAME}_
