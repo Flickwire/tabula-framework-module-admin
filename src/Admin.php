@@ -5,7 +5,7 @@ use Tabula\Tabula;
 use Tabula\Module;
 use Tabula\Router;
 use Tabula\Router\Route;
-use Tabula\Database\AbstractAdapter;
+use Tabula\Database\Adapter\AbstractAdapter;
 
 class Admin implements Module {
     
