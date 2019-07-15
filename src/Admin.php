@@ -52,20 +52,24 @@ class Admin implements Module {
         foreach ($this->groups as $groupName => $group) {
             $class = "";
             $icon = "";
+            $ui = "";
             if (!$this->groupActive($group)){
                 $class = " dropdown";
                 $icon = "<i class=\"dropdown icon\"></i>";
+                $ui = "ui ";
             }
             $outMarkup = str_replace("_{PANE_NAME}_","
-            <div class=\"item{$class}\">
+            <div class=\"{$ui}item{$class}\">
             {$groupName}
             {$icon}
-            <div class=\"menu\">
+            <div class=\"{$ui}menu\">
+            _{PANE_NAME}_
             ",$outMarkup);
             $outMarkup = $this->renderMenu($outMarkup,$group);
             $outMarkup = str_replace("_{PANE_NAME}_","
             </div>
             </div>
+            _{PANE_NAME}_
             ",$outMarkup);
         }
         $outMarkup = $this->renderMenu($outMarkup,$this->panes);
@@ -73,7 +77,7 @@ class Admin implements Module {
             $outMarkup = str_replace("_{PANE_NAME}_","",$outMarkup);
         } else {
             $outMarkup = str_replace("_{PANE_NAME}_","
-            <div class=\"link item active\" href=\"#\">
+            <div class=\"ui link item active\" href=\"#\">
             <i class=\"info circle icon\"></i>
             No Admin Panes Loaded
             </div>

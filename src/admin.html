@@ -1,29 +1,31 @@
-<html style="height: 100%; width: 100%; margin:0; padding:0;">
+<html>
     <head>
-        <meta name="viewport" value="initial-scale=1" />
+        <meta name="viewport" value="initial-scale=1, width=device-width" />
         <title>Tabula - _{CURRENT_NAME}_</title>
         <link href="_{SEMANTIC_PATH}_semantic.min.css" rel="stylesheet" />
     </head>
-    <body style="height: 100%; width: 100%; margin:0; padding:0;">
-            <div class="ui divided grid">
-                <div class="ui four wide column" style="height: 100vh; overflow-y: hidden; max-width: 300px;">
-                    <div class="ui divider hidden"></div>
-                    <h2 class="ui heading" style="text-align: center; width: 100%;">Tabula</h2>
-                    <div class="ui divider"></div>
-                    <div class="ui fluid secondary vertical menu" style="height: 100%; overflow-y:auto;">
-                        _{PANE_NAME}_
-                    </div>
+    <body>
+        <div class="ui basic segment" style="left:calc(1.5rem + 314px);width:calc(100vw - (314px + 3rem));">
+            <div class="ui left dividing close rail" style="height:100vh; margin:0; padding-top:14px;">
+                <h1 class="ui heading" style="text-align: center; width: 100%; margin-top:24px;">Tabula</h1>
+                <div class="ui divider"></div>
+                <div class="ui fluid vertical menu" style="overflow-x:visible;">
+                    _{PANE_NAME}_
                 </div>
-                <div class="ui eleven wide column" style="height: 100vh; overflow-y: hidden;">
-                    <div class="ui divider hidden"></div>
-                    <h1 class="ui heading">_{CURRENT_NAME}_</h1>
-                    <div class="ui divider"></div>
-                    <div style="height: 100%; overflow-y: auto;">
-                        _{CURRENT_PANE}_
-                    </div>
-                </div>
+            </div>
+            <h1 class="ui heading">_{CURRENT_NAME}_</h1>
+            <div class="ui divider"></div>
+            <div>
+                _{CURRENT_PANE}_
+            </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" async></script>
         <script src="_{SEMANTIC_PATH}_semantic.min.js" async defer></script>
+        <script>
+            window.onload = function(){
+                $('.ui.dropdown')
+                .dropdown();
+            }
+        </script>
     </body>
 </html>
