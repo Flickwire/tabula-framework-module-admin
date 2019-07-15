@@ -14,11 +14,13 @@
                         _{PANE_NAME}_
                     </div>
                 </div>
-                <div class="ui eleven wide column">
+                <div class="ui eleven wide column" style="height: 100vh; overflow-y: hidden;">
                     <div class="ui divider hidden"></div>
                     <h1 class="ui heading">_{CURRENT_NAME}_</h1>
                     <div class="ui divider"></div>
-                    _{CURRENT_PANE}_
+                    <div style="height: 100%; overflow-y: auto;">
+                        _{CURRENT_PANE}_
+                    </div>
                 </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" async></script>
