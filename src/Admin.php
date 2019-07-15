@@ -62,13 +62,13 @@ class Admin implements Module {
             {$icon}
             <div class=\"menu\">
             ",$outMarkup);
-            $outMarkup = str_replace("_{PANE_NAME}_",$this->renderMenu($group),$outMarkup);
+            $outMarkup = $this->renderMenu($outMarkup,$group);
             $outMarkup = str_replace("_{PANE_NAME}_","
             </div>
             </div>
             ",$outMarkup);
         }
-        $outMarkup = str_replace("_{PANE_NAME}_",$this->renderMenu($this->panes),$outMarkup);
+        $outMarkup = $this->renderMenu($outMarkup,$this->panes);
         if ($this->hasPanes){
             $outMarkup = str_replace("_{PANE_NAME}_","",$outMarkup);
         } else {
@@ -85,8 +85,7 @@ class Admin implements Module {
         echo($outMarkup);
     }
 
-    private function renderMenu(array $items): string{
-        $outMarkup = "_{PANE_NAME}_";
+    private function renderMenu(string $outMarkup, array $items): string{
         $currentPane = $this->tabula->registry->getRequest()->get("pane");
         $adminUrl = $this->tabula->registry->getUriBase() . "admin";
         foreach ($items as $pane) {
@@ -97,7 +96,7 @@ class Admin implements Module {
             if ($icon === null){
                 $icon = "";
             } else {
-                $icon = "<i class=\"icon {$icon}\"></i>";
+                $icon = "<i class=\"{$icon} icon\"></i>";
             }
             if ($paneUrl === '#'){
                 $outMarkup = str_replace("_{PANE_NAME}_",
@@ -121,7 +120,8 @@ class Admin implements Module {
                 $outMarkup);
             }
             if ($currentPane === $pane->getSlug() && !$this->renderedPane){
-                $outMarkup = str_replace("_{CURRENT_PANE}_",$pane->render($this->tabula),$outMarkup);
+                $render = $pane->render($this->tabula);
+                $outMarkup = str_replace("_{CURRENT_PANE}_",$render,$outMarkup);
                 $outMarkup = str_replace("_{CURRENT_NAME}_",$pane->getName(),$outMarkup);
                 $this->renderedPane = true;
             }
