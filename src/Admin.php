@@ -5,6 +5,7 @@ use Tabula\Tabula;
 use Tabula\Module;
 use Tabula\Router;
 use Tabula\Router\Route;
+use Tabula\Database\AbstractAdapter;
 
 class Admin implements Module {
     
@@ -13,7 +14,7 @@ class Admin implements Module {
     private $tabula;
     private $renderedPane = false;
 
-    public function upgrade(string $version): string{
+    public function upgrade(string $version, AbstractAdapter $db): string{
         return '1.0';
     }
 
