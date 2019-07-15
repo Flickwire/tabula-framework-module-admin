@@ -13,6 +13,7 @@ class Admin implements Module {
     private $groups = [];
     private $tabula;
     private $renderedPane = false;
+    private $hasPanes = false;
 
     public function upgrade(string $version, AbstractAdapter $db): string{
         return '1.0';
@@ -68,12 +69,16 @@ class Admin implements Module {
             ",$outMarkup);
         }
         $outMarkup = str_replace("_{PANE_NAME}_",$this->renderMenu($this->panes),$outMarkup);
-        $outMarkup = str_replace("_{PANE_NAME}_","
-        <div class=\"link item active\" href=\"#\">
-        <i class=\"info circle icon\"></i>
-        No Admin Panes Loaded
-        </div>
-        ",$outMarkup);
+        if ($this->hasPanes()){
+            $outMarkup = str_replace("_{PANE_NAME}_","",$outMarkup);
+        } else {
+            $outMarkup = str_replace("_{PANE_NAME}_","
+            <div class=\"link item active\" href=\"#\">
+            <i class=\"info circle icon\"></i>
+            No Admin Panes Loaded
+            </div>
+            ",$outMarkup);
+        }
         $outMarkup = str_replace("_{CURRENT_PANE}_",'No Pane Selected',$outMarkup);
         $outMarkup = str_replace("_{CURRENT_NAME}_",'Admin',$outMarkup);
         $outMarkup = str_replace("_{SEMANTIC_PATH}_",$this->tabula->registry->getUriBase().'/vendor/semantic/ui/dist/',$outMarkup);
@@ -85,6 +90,7 @@ class Admin implements Module {
         $currentPane = $this->tabula->registry->getRequest()->get("pane");
         $adminUrl = $this->tabula->registry->getUriBase() . "admin";
         foreach ($items as $pane) {
+            $this->hasPanes = true;
             $class = ($currentPane === $pane->getSlug()) ? ' active' : '';
             $paneUrl = ($currentPane === $pane->getSlug()) ? '#' : ($adminUrl . "?pane=" . $pane->getSlug());
             $icon = $pane->getIcon();
