@@ -122,4 +122,15 @@ class Admin implements Module {
         }
         return $outMarkup;
     }
+
+    //Check if any pane in a group is active, to expand the group
+    private function groupActive(array $group): bool{
+        $active = false;
+        $currentPane = $this->tabula->registry->getRequest()->get("pane");
+        if ($currentPane === null) return false;
+        foreach ($group as $pane){
+            if ($currentPane === $pane->getSlug()) return true;
+        }
+        return false;
+    }
 }
