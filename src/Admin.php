@@ -69,7 +69,7 @@ class Admin implements Module {
             ",$outMarkup);
         }
         $outMarkup = str_replace("_{PANE_NAME}_",$this->renderMenu($this->panes),$outMarkup);
-        if ($this->hasPanes()){
+        if ($this->hasPanes){
             $outMarkup = str_replace("_{PANE_NAME}_","",$outMarkup);
         } else {
             $outMarkup = str_replace("_{PANE_NAME}_","
