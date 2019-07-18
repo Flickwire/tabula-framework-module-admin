@@ -20,7 +20,6 @@ class Admin implements Module {
     }
 
     public function registerRoutes(Router $router): void{
-        $router->register(new Route("/admin",$this,"render"));
     }
 
     public function preInit(Tabula $tabula): void{
@@ -29,6 +28,11 @@ class Admin implements Module {
     }
 
     public function init(): void{
+        if(class_exists("\Tabula\Modules\Auth\SecureRoute")){
+            $this->tabula->router->register(new \Tabula\Modules\Auth\SecureRoute($this->tabula,"/admin",$this,"render"));
+        } else {
+            $this->tabula->router->register(new Route("/admin",$this,"render"));
+        }
     }
 
     public function getName(): string{
@@ -83,6 +87,24 @@ class Admin implements Module {
             </div>
             ",$outMarkup);
         }
+        //Show errors
+        $errors = $this->tabula->session->getErrors();
+        if ($errors !== []){
+            $errortext = "";
+            foreach ($errors as $error) {
+                $errortext .= "<li>{$error}</li>";
+            }
+            $outMarkup = str_replace("_{ERRORS}_","
+            <div class=\"ui error message\">
+                <i class=\"close icon\"></i>
+                <div class=\"header\">
+                    Error
+                </div>
+                <ul>{$errortext}</ul>
+            </div>
+            ",$outMarkup);
+        }
+        $outMarkup = str_replace("_{ERRORS}_",'',$outMarkup);
         $outMarkup = str_replace("_{CURRENT_PANE}_",'No Pane Selected',$outMarkup);
         $outMarkup = str_replace("_{CURRENT_NAME}_",'Admin',$outMarkup);
         $outMarkup = str_replace("_{SEMANTIC_PATH}_",$this->tabula->registry->getUriBase().'/vendor/semantic/ui/dist/',$outMarkup);
