@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Tabula - Admin</title>
+        <link href="{{ semanticCss }}" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="ui basic segment" style="left:calc(1.5rem + 314px);width:calc(100vw - (314px + 3rem));">
+            <div class="ui left dividing close rail" style="height:100vh; margin:0; padding-top:14px;">
+                <h1 class="ui heading" style="text-align: center; width: 100%; margin-top:24px;">Tabula</h1>
+                <div class="ui divider"></div>
+                <div class="ui fluid vertical menu" style="overflow-x:visible;">
+                    {% for group in groups %}
+                    {% set groupActive = group.active %}
+                    {% if not groupActive %}
+                    <div class="ui item dropdown">
+                        <i class="dropdown icon"></i>
+                    {% else %}
+                    <div class="item">
+                    {% endif %}
+                        {{ group.name }}
+                        {% if not groupActive %}
+                        <div class="ui menu">
+                        {% else %}
+                        <div class="menu">
+                        {% endif %}
+                            {% for item in group.items %}
+                            {% block menuItem %}
+                            {% set itemActive = item.isActive() %}
+                            {% if itemActive %}
+                            <div class="item active">
+                            {% else %}
+                            <a class="item" href="{{ adminUrl ~ item.getSlug() }}">
+                            {% endif %}
+                                <i class="{{ item.getIcon() }} icon"></i>
+                                {{ item.getName() }}
+                            {% if itemActive %}
+                            </div>
+                            {% else %}
+                            </a>
+                            {% endif %}
+                            {% endblock %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% for item in items %}
+                    {{ block('menuItem') }}
+                    {% endfor %}
+                </div>
+            </div>
+            <h1 class="ui heading">
+            {% if activeItem %}
+                <i class="{{ activeItem.getIcon() }} icon"></i>
+                {{ activeItem.getName() }}
+            {% else %}
+                <i class="info circle icon"></i>
+                Admin
+            {% endif %}
+            </h1>
+            <div class="ui divider"></div>
+            {% if errors %}
+            <div class="ui error message">
+                <i class="close icon"></i>
+                <div class="header">
+                    Error
+                </div>
+                <ul class="list">
+                    {% for error in errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <div>
+                {% if activeItem %}
+                {{ activeItem.render()|raw }}
+                {% else %}
+                {% include "modules/admin/panes/default.html" %}
+                {% endif %}
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="{{ semanticJs }}"></script>
+        <script>
+            {% for script in ___includeScripts %}
+            {{ include(script) }}
+            {% endfor %}
+        </script>
+    </body>
+</html>

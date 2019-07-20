@@ -1,30 +1,40 @@
 <?php 
 namespace Tabula\Modules\Admin;
 
-interface AdminPane {
+abstract class AdminPane {
+    public $tabula;
+
+    public function __construct($tabula){
+        $this->tabula = $tabula;
+    }
 
     /**
      * Return the body HTML of your pane here
-     * Will be directly echo'd so all processing must
-     * finish before you return
-     * 
-     * Passed the tabula instance in case you need it
+     * Will be thrown into a raw tag, so please escape
+     * your shit with the twig renderer first <3
      */
-    public function render(\Tabula\Tabula $tabula): string;
+    abstract public function render(): string;
 
     /**
      * Return the name of your admin pane,
      * for the menu
      */
-    public function getName(): string;
+    abstract public function getName(): string;
 
     /**
      * Return a url-friendly slug for your pane
      */
-    public function getSlug(): string;
+    abstract public function getSlug(): string;
 
     /**
      * Return an icon for the menu if you want to
      */
-    public function getIcon(): ?string;
+    abstract public function getIcon(): ?string;
+
+    /**
+     * Check if this pane is active
+     */
+    public function isActive(): bool{
+        return $this->getSlug() === $this->tabula->registry->getRequest()->get("pane");
+    }
 }
