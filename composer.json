@@ -6,16 +6,12 @@
     "authors": [
         {
             "name": "Skye",
-            "email": "skye@domos.me.uk"
+            "email": "skye@blueskye.co.uk"
         }
     ],
-    "repositories": [{
-        "type": "composer",
-        "url": "https://packages.lovelace.digital"
-    }],
     "require": {
-        "polymathic/tabula": "dev-master",
-        "polymathic/tabula-moduleinstaller": "dev-master",
+        "tabula/tabula": "dev-master",
+        "tabula/tabula-moduleinstaller": "dev-master",
         "semantic/ui": "^2.4"
     },
     "autoload": {
