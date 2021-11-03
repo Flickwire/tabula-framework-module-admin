@@ -2,7 +2,7 @@
     "name": "tabula/module-admin",
     "description": "Tabula Admin Panel",
     "type": "tabula-module",
-    "license": "Proprietary", 
+    "license": "MIT", 
     "authors": [
         {
             "name": "Skye",
